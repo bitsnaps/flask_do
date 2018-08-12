@@ -18,7 +18,7 @@ from rethinkdb.errors import RqlRuntimeError, RqlDriverError
 
 # We will use these settings later in the code to connect to the
 # RethinkDB server.
-RDB_HOST =  os.environ.get('RDB_HOST') or 'localhost'
+RDB_HOST =  os.environ.get('RDB_HOST') or '0.0.0.0'
 RDB_PORT = os.environ.get('RDB_PORT') or 28015
 TODO_DB = 'todoapp'
 
@@ -34,9 +34,9 @@ def dbSetup():
     try:
         r.db_create(TODO_DB).run(connection)
         r.db(TODO_DB).table_create('todos').run(connection)
-        print 'Database setup completed. Now run the app without --setup.'
+        print('Database setup completed. Now run the app without --setup.')
     except RqlRuntimeError:
-        print 'App database already exists. Run the app without --setup.'
+        print('App database already exists. Run the app without --setup.')
     finally:
         connection.close()
 
