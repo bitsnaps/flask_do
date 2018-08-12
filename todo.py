@@ -163,7 +163,7 @@ if __name__ == "__main__":
     if args.run_setup:
         dbSetup()
     else:
-        app.run(debug=True)
+        app.run(debug=True, host='0.0.0.0')
 
 
 # ### Best practices ###
