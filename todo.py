@@ -18,7 +18,7 @@ from rethinkdb.errors import RqlRuntimeError, RqlDriverError
 
 # We will use these settings later in the code to connect to the
 # RethinkDB server.
-RDB_HOST =  os.environ.get('RDB_HOST') or '0.0.0.0'
+RDB_HOST =  os.environ.get('RDB_HOST') or 'localhost'
 RDB_PORT = os.environ.get('RDB_PORT') or 28015
 TODO_DB = 'todoapp'
 
