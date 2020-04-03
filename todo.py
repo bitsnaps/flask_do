@@ -11,7 +11,7 @@ import os
 
 from flask import Flask, g, jsonify, render_template, request, abort
 
-import rethinkdb as r
+import rethinkdb as rdb
 from rethinkdb.errors import RqlRuntimeError, RqlDriverError
 
 #### Connection details
@@ -21,6 +21,7 @@ from rethinkdb.errors import RqlRuntimeError, RqlDriverError
 RDB_HOST =  os.environ.get('RDB_HOST') or 'localhost'
 RDB_PORT = os.environ.get('RDB_PORT') or 28015
 TODO_DB = 'todoapp'
+r = rdb.RethinkDB()
 
 #### Setting up the app database
 
@@ -46,9 +47,9 @@ app.config.from_object(__name__)
 
 #### Managing connections
 
-# The pattern we're using for managing database connections is to have **a connection per request**. 
-# We're using Flask's `@app.before_request` and `@app.teardown_request` for 
-# [opening a database connection](http://www.rethinkdb.com/api/python/connect/) and 
+# The pattern we're using for managing database connections is to have **a connection per request**.
+# We're using Flask's `@app.before_request` and `@app.teardown_request` for
+# [opening a database connection](http://www.rethinkdb.com/api/python/connect/) and
 # [closing it](http://www.rethinkdb.com/api/python/close/) respectively.
 @app.before_request
 def before_request():
@@ -72,7 +73,7 @@ def teardown_request(exception):
 # command to query the database in response to a GET request from the
 # browser. When `table(table_name)` isn't followed by an additional
 # command, it returns all documents in the table.
-#    
+#
 # Running the query returns an iterator that automatically streams
 # data from the server in efficient batches.
 @app.route("/todos", methods=['GET'])
@@ -88,7 +89,7 @@ def get_todos():
 #
 # The `insert` operation returns a single object specifying the number
 # of successfully created objects and their corresponding IDs:
-# 
+#
 # ```
 # {
 #   "inserted": 1,
@@ -172,7 +173,7 @@ if __name__ == "__main__":
 #
 # The RethinkDB server doesn't use a thread-per-connnection approach
 # so opening connections per request will not slow down your database.
-# 
+#
 # #### Fetching multiple rows: batched iterators ####
 #
 # When fetching multiple rows from a table, RethinkDB returns a
@@ -180,16 +181,16 @@ if __name__ == "__main__":
 # result. Once the end of the current batch is reached, a new batch is
 # automatically retrieved from the server. From a coding point of view
 # this is transparent:
-#   
+#
 #     for result in r.table('todos').run(g.rdb_conn):
 #         print result
-#     
-#    
+#
+#
 # #### `replace` vs `update` ####
 #
 # Both `replace` and `update` operations can be used to modify one or
 # multiple rows. Their behavior is different:
-#    
+#
 # *   `replace` will completely replace the existing rows with new values
 # *   `update` will merge existing rows with the new values
 
