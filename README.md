@@ -1,6 +1,7 @@
 # What is it #
 
 A demo web application in the spirit of [TodoMVC](http://addyosmani.github.com/todomvc/) showing how to use **RethinkDB as a backend for Flask and Backbone.js applications**.
+P.S. This repo is python 3 compatible.
 
 As any todo application, this one implements the following functionality:
 
@@ -33,7 +34,7 @@ Make sure you have RethinkDB running.
 If you are not running RethinkDB on your local machine with the default settings,
 update the `todo.py` file on lines 21 and 22.
 
-_Note_: If you don't have RethinkDB installed, you can follow [these instructions to get it up and running](http://www.rethinkdb.com/docs/install/). 
+_Note_: If you don't have RethinkDB installed, you can follow [these instructions to get it up and running](http://www.rethinkdb.com/docs/install/).
 
 
 
